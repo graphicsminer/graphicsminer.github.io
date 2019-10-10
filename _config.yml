@@ -13,7 +13,7 @@ google_analytics:
 
 date_format: "%b %-d, %Y"
 
-theme: # leave it empty
+theme: jekyll-theme-cayman
 
 # social
 author: Graphicsminer
