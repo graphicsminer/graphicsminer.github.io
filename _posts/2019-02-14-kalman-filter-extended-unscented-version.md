@@ -11,9 +11,11 @@ meta: "Springfield"
 # Kalman Filter, Extendted version and No derivative required version
 Before jumping into Kalman filter, we should recall Gaussian distribution and its effectiveness when digital computers not ready yet.
 
-Gaussian pdf function for a random variable **x** ~ $$ N $$ ( $$ m $$, $$P$$)
+Gaussian pdf function for a random variable
 
-$$N($$ **x** $$|$$ **m**, **P** $$)$$ $$= \frac{1}{(2\pi)^{n/2} P^{1/2}} \exp{(-\frac{1}{2} (x - m)^T P^{-1} (x- m))} $$
+**x** ~ $$ N $$ ( $$ m $$, $$P$$)
+
+$$N( x | m, P) = \frac{1}{(2\pi)^{n/2} P^{1/2}} \exp{(-\frac{1}{2} (x - m)^T P^{-1} (x- m))} $$
 
 Let **x** and **y** have the Gaussian densities and have linear relationship
 
