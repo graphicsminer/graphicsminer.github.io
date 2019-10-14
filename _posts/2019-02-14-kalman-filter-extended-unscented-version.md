@@ -92,8 +92,9 @@ $$y_k = H_k x_k + r_k = g(x_k, r_k)$$
 
 We can express these above equations in probabilistic language as follows:
 
-$$p(x_{k} | x_{k-1}) = N(x_{k} |A_{k-1} x_{k-1}, Q_{k-1})$$
-$$p(y_{k} | x_{k}) = N(y_{k}|H_{k} x_{k}, R_{k})$$
+$$p(x_{k} \mid x_{k-1}) = N(x_{k} \mid A_{k-1} x_{k-1}, Q_{k-1})$$
+
+$$p(y_{k} \mid x_{k}) = N(y_{k} \mid H_{k} x_{k}, R_{k})$$
 
 **Derivation of the prediction step in Kalman filter**
 Follows the Chapman-Kolmogorov equation, we can get
