@@ -122,7 +122,7 @@ $$m^{''} = \begin{pmatrix} m_k^- \\\ H_k m_k^- \end{pmatrix}$$
 
 $$P^{''} = \begin{pmatrix} P_k^- && P_k^-H_k^T \\\ H_k P_k^- && H_k P_k^- H_k^T + R_k \end{pmatrix}$$
 
-The conditional distribution $$p( x_{k} | y_{1:k} )$$ is given as
+The conditional distribution $$p$$ ( $$x_{k}$$ | $$y_{1:k}$$ ) is given as
 
 $$p(x_k|y_k) = N(x_k |m_k, P_k)$$
 
