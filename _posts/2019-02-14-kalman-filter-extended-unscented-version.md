@@ -57,8 +57,8 @@ Before mathematically speaking about the problem, let's assume several condition
 
 **Formulate the problem**
 The problem can be formulated as general probabilistic state space model:
-* Measurement model: $ y_{k} \sim p(y_{k}|x_{k}) $
-* Dynamic model: $ x_{k} \sim p(x_{k}|x_{k-1}) $
+* Measurement model: $$ y_{k} \sim p(y_{k} \mid x_{k}) $$
+* Dynamic model: $$ x_{k} \sim p(x_{k} \mid x_{k-1}) $$
 
   The state space mode has the form of hidden Markov model (HMM):
   observed  
@@ -75,7 +75,7 @@ Markovian assumption
 
 $$p(x_k | y_{1:k}) = \frac{1}{Z_k} p(y_{k}|x_k) p(x_k|y_{1:k-1})$$
 
- and $ Z_{k} = p(y_{k} | y_{1:k-1}) $ is given as
+ and $$ Z_{k} = p(y_{k} \mid y_{1:k-1}) $$ is given as
 
  $$Z_k = \int p(y_k |x_k)p(x_k|y_{1:k-1})dx_k$$
 
@@ -92,8 +92,9 @@ $$y_k = H_k x_k + r_k = g(x_k, r_k)$$
 
 We can express these above equations in probabilistic language as follows:
 
-$$p(x_{k} | x_{k-1}) = N(x_{k} |A_{k-1} x_{k-1}, Q_{k-1})$$
-$$p(y_{k} | x_{k}) = N(y_{k}|H_{k} x_{k}, R_{k})$$
+$$p(x_{k} \mid x_{k-1}) = N(x_{k} \mid A_{k-1} x_{k-1}, Q_{k-1})$$
+
+$$p(y_{k} \mid x_{k}) = N(y_{k} \mid H_{k} x_{k}, R_{k})$$
 
 **Derivation of the prediction step in Kalman filter**
 Follows the Chapman-Kolmogorov equation, we can get
@@ -122,9 +123,9 @@ $$m^{''} = \begin{pmatrix} m_k^- \\\ H_k m_k^- \end{pmatrix}$$
 
 $$P^{''} = \begin{pmatrix} P_k^- && P_k^-H_k^T \\\ H_k P_k^- && H_k P_k^- H_k^T + R_k \end{pmatrix}$$
 
-The conditional distribution $ p(x_{k} | y_{1:k}) $ is given as
+The conditional distribution $$p(x_{k} \mid y_{1:k})$$ is given as
 
-$$p(x_k|y_k) = N(x_k |m_k, P_k)$$
+$$p(x_k|y_k, y_{1:k-1}) = N(x_k |m_k, P_k)$$
 
 where
 
