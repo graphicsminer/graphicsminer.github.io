@@ -8,7 +8,7 @@ author: "Phuong Hoang"
 meta: "Springfield"
 ---
 
-# Kalman Filter, Extendted version and No derivative required version
+# Kalman Filter, extended version and no derivative required version
 Before jumping into Kalman filter, we should recall Gaussian distribution and its effectiveness when digital computers not ready yet.
 
 Gaussian pdf function for a random variable **x** ~ $$ N $$ ( $$ m $$, $$P$$)
@@ -127,6 +127,8 @@ The conditional distribution $ p(x_{k} | y_{1:k}) $ is given as
 $$p(x_k|y_k) = N(x_k |m_k, P_k)$$
 
 where
+
+
 $$S_k = H_k P_k^- H_k^T + R_k$$
 
 
