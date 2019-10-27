@@ -36,7 +36,7 @@ We should ask the main questions of Linear Approximation of Non-Linear Transform
 
 First, the probability density of y is now NOT Gaussian any more. The main reason is that the form of it is now as follows:
 
-$$p(y) = \mid J(h)\mid N(g^(-1)(y) \mid m, P)$$
+$$p(y) = \mid J(h)\mid N(g^{-1}(y) \mid m, P)$$
 
 But we should linearly approximate the probability distribution of $$y = g(x)$$ by estimating its mean $$E[g(x)]$$ and its covariance $$Cov[g(x)]$$
 
@@ -56,8 +56,15 @@ For covariance we get the approximation based on Delta method for multivariate v
 
 $$g(x) \approx g(m) + G_x(m)^T (x-m)$$
 
+<!--
+\begin{align} Var(g(x)) & \approx Var(g(m) + G_x(m)^T (x-m)) \\ &= Var(g(m) + G_x(m)^T x - G_x(m)^T m)  \\ &= Var(G_x(m)^T x) \\ &= G_x(m)^T Var(x) G_x(m) \end{align} -->
 
-\begin{align} Var(g(x)) & \approx Var(g(m) + G_x(m)^T (x-m)) \\ &= Var(g(m) + G_x(m)^T x - G_x(m)^T) m \\ &= Var(G_x(m)^T x) \\ &= G_x(m)^T Var(x) G_x(m) \end{align}
+$$\begin{eqnarray}
+Var(g(x)) &\approx& Var(g(m) + G_x(m)^T (x-m))   \\\\\\
+&=& Var(g(m) + G_x(m)^T x - G_x(m)^T) m \\\\\\
+&=& Var(G_x(m)^T x)  \\\\\\
+&=& G_x(m)^T Var(x) G_x(m)
+\end{eqnarray}$$
 
 $$cov(g(x)) \approx G_x(m)^T P G_x(m) $$
 
