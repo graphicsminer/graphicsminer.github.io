@@ -8,7 +8,7 @@ author: "Phuong Hoang"
 meta: "Springfield"
 ---
 
-##Forward Kinematics
+## Forward Kinematics
 Forward kinematics describes the mapping between joint coordinates **q** and the end-effector configuration $$X_e$$ of the robot.
 
 $$X_e = X_e(q)$$
@@ -38,14 +38,14 @@ $$ J_{eA}(q) = \begin{pmatrix} \frac{\partial x_1}{\partial q_1} \cdots \frac{\p
 
 The Jacobian is useful in both kinematics and dynamics of robotic systems. It relates the differences from joint to end-effector space.
 
-##Analytical and Kinematic Jacobian
+## Analytical and Kinematic Jacobian
 
 ### Analytical Jacobian
 $$  \dot{X_e} = J_{eA}(q) \dot{q}$$
 
 It relates time-derivatives of config parameters to generalized velocities. It depends on the parameterization selection in 3D. For example, using the cartesian coordinates for representation of positions is different from using the cylindrical coordinates. It results in different analytical Jacobian matrices.
 
-###Geometric Jacobian
+### Geometric Jacobian
 
 $$ w_e = \begin{pmatrix} v_e \\\ w_e \end{pmatrix} = J_{e0}(q)\dot{q}$$
 
@@ -54,14 +54,14 @@ It relates the end-effector velocity to generalized velocities including linear 
 
 ## Inverse Differential Kinematics vs Inverse Kinematics
 
-###Inverse Kinematics
+### Inverse Kinematics
 The goal of inverse kinematics is to find a mapping function from the desired end-effector configuration $$X_e^\star$$ to joint configuration $$q$$:
 
 $$q = q(X_e^\star)$$
 
 given $$ \partial {X_e} \approx J_{eA}(q) \partial q$$
 
-###Inverse Differential Kinematics
+### Inverse Differential Kinematics
 As we have known, the geometric Jacobian matrix  $$J_e0{q}$$ performs a simple mapping between $$\dot{q}$$ and the end-effector velocity $$w_e$$. However, in real practices, we can decide the end-effector velocity manually or automatically, the robot should automatically estimate the joint velocity $$\dot q$$ to control your robot.
 
 If we can compute the pseudo-inverse of the Jacobian, we can calculate the joint velocity as follows:
@@ -70,4 +70,4 @@ $$\dot q = J_{e0}^{+}w_e^{\star}$$
 By taking The Moore-Penrose pseudo inverse, the above solution minimizes the least square error
 $$|| w_e^{\star} - J_{e0} \dot{q} ||^2$$
 
-In the case $$J_{e0} $$ close to singularities, we can use a damped version of the Moore-Penrose pseudo-inverse which is similar to minimize the error $$|| w_e^{\star} - J_{e0} \dot{q} ||^2 + \lambda ||\dot{q}||^2$$
+In the case $$J_{e0} $$ close to singularities, we can use a damped version of the Moore-Penrose pseudo-inverse which is similar to minimize the error $$\mid\mid w_e^{\star} - J_{e0} \dot{q} \mid\mid^2 + \lambda \mid\mid\dot{q}\mid\mid^2$$
