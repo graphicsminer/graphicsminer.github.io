@@ -60,15 +60,17 @@ $$g(x) \approx g(m) + G_x(m)^T (x-m)$$
 \begin{align} Var(g(x)) & \approx Var(g(m) + G_x(m)^T (x-m)) \\ &= Var(g(m) + G_x(m)^T x - G_x(m)^T m)  \\ &= Var(G_x(m)^T x) \\ &= G_x(m)^T Var(x) G_x(m) \end{align} -->
 
 $$\begin{eqnarray}
-Var(g(x)) &\approx& Var(g(m) + G_x(m)^T (x-m))   \\\\\\
-&=& Var(g(m) + G_x(m)^T x - G_x(m)^T) m \\\\\\
-&=& Var(G_x(m)^T x)  \\\\\\
+Var[g(x)] &\approx& Var[g(m) + G_x(m)^T (x-m)]   \\\\\\
+&=& Var[g(m) + G_x(m)^T x - G_x(m)^T m]  \\\\\\
+&=& Var[G_x(m)^T x]  \\\\\\
 &=& G_x(m)^T Var(x) G_x(m)
 \end{eqnarray}$$
 
-$$cov(g(x)) \approx G_x(m)^T P G_x(m) $$
+$$cov[g(x)] \approx G_x(m)^T P G_x(m) $$
 
 Now,  we derive the EKF based on the linear approximations of non-linear transforms.
+
+#Prediction step
 
 Assume that the filtering distribution of the previous step is Gaussian
 
@@ -80,4 +82,38 @@ $$ p(x_{k-1}, x_k \mid y_{1:k-1}) \approx N( \left [ x_{k-1}, x_k \right ] \mid 
 
 where
 
-$$m^{'} = \left ( m_{k-1}, f(m_{k-1}) \right )$$
+$$m^{'} = \begin{pmatrix} m_{k-1} \\\ f(m_{k-1}) \end{pmatrix}$$
+
+$$P^{'} = \begin{pmatrix} P_{k-1} && P_{k-1}F_x^T(m_{k-1}) \\\ F_x(m_{k-1})P_{k-1} && F_xP_{k-1}F_x^T + Q_{k-1} \end{pmatrix}$$
+
+In the prediction step, the approximate predicted distribution of $$x_k$$ given $$y_{1:k-1}$$ is Gaussian with moments
+
+$$ P(x_k \mid y_{1:k-1}) \sim N(m_k^{-}, P_{k}^{-})$$
+
+$$ m_k^{-} = f(m_{k-1}) $$
+
+$$ P_k^{-} =  F_xP_{k-1}F_x^T + Q_{k-1} $$
+
+#Update step
+Similarly, we can approximate the joint distribution of $$x_k$$ and $$y_k = h(x_k) + r_k$$ by linear approximation although the distribution is non-Gaussian
+
+$$ P(x_k, y_k \mid y_{1:k-1}) \approx N \left( \begin{matrix} x_k \\\ y_k \end{matrix} \mid m^{''}, P^{''} \right)$$
+
+where
+
+$$ m^{''} = \begin{pmatrix} m_k^{-} \\\ h(m_k^{-}) \end{pmatrix}$$
+
+$$ P^{''} = \begin{pmatrix} P_k^{-} && P_k^{-}H_x^T(m_k^{-}) \\\ H_x(m_k^{-}) P_k^{-} && H_x(m_k^{-}) P_k^{-}H_x^T(m_k^{-}) + R_k \end{pmatrix}$$
+
+From the joint distribution, we can derive the conditional distribution $$ p(x_k \mid y_k, y_{1:k-1}) \approx N(m_k, P_k)$$ as follows:
+
+$$ m_k = m_k^{-} + P_k^{-} H_k^T (H_x P_k^{-} H_x^T +R_k)^{-1} [y_k - h(m_k^{-})]$$
+
+
+$$ P_k = P_k^{-} - P_k^{-}H_x^T(H_x P_k^{-} H_x^{T} + R_k)^{-1}H_x P_k^{-}$$
+
+It sounds mathematically complex right?! But you don't have to remember the equation since computers or edge computing resources will do it for you.
+
+What we should understand and remember are the advantages and limitations of EKF.
+* Noise processes must be Gaussian - not sure in real practices
+* Jacobian matrices can be computationally expensive and quite error prone
