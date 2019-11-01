@@ -71,3 +71,23 @@ By taking The Moore-Penrose pseudo inverse, the above solution minimizes the lea
 $$|| w_e^{\star} - J_{e0} \dot{q} ||^2$$
 
 In the case $$J_{e0} $$ close to singularities, we can use a damped version of the Moore-Penrose pseudo-inverse which is similar to minimize the error $$\mid\mid w_e^{\star} - J_{e0} \dot{q} \mid\mid^2 + \lambda \mid\mid\dot{q}\mid\mid^2$$
+
+
+Dynamics 
+
+Forward Dynamics
+
+
+Inverse Dynamics
+
+$$M(q) \dot u + b(q, u) + g(u) + J_c^T F_c= S^T \tau$$
+
+$$M \ddot q + b + g = \tau$$
+
+$$J_e \ddot q + \dot J_e \dot q = \dot w_e^{\star}$$
+
+$$[M - I]\begin{pmatrix} \ddot q \\\ \tau \end{pmatrix} + b + g = 0$$
+
+$$[J_e 0]\begin{pmatrix} \ddot q \\\ \tau \end{pmatrix} + \dot J_e \dot q= \dot w_e^{\star}$$
+
+$$\min_{\ddot q, \tau} \mid \mid \begin{pmatrix} M && -I \\\ J_e  && 0 \end{pmatrix}\begin{pmatrix} \ddot q \\\ \tau \end{pmatrix} + \begin{pmatrix} b + g \\\ \dot J_e \dot q - \dot w_e^{\star} \end{pmatrix}  \mid \mid $$
