@@ -33,6 +33,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: $body-text-color;
+  //background-color: $main-background-color;
 }
 
 #skip-to-content {
@@ -206,7 +207,7 @@ a {
     ol {
       margin-top: 0;
       padding-left: 0;
-    }    
+    }
   }
 
   kbd {

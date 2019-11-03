@@ -13,8 +13,8 @@ google_analytics:
 
 date_format: "%b %-d, %Y"
 
-# theme: jekyll-theme-cayman
-theme: jekyll-theme-midnight
+theme: jekyll-theme-cayman
+# theme: jekyll-theme-midnight
 
 # social
 author: Graphicsminer
