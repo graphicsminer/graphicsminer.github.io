@@ -7,7 +7,7 @@ image: /thumbnail-mobile.png
 author: "Phuong Hoang"
 meta: "Springfield"
 ---
-
+![Sant Logo](/images/SAnt-MechanicalDesign.gif)
 ## Forward Kinematics
 Forward kinematics describes the mapping between joint coordinates **q** and the end-effector configuration $$X_e$$ of the robot.
 
@@ -73,7 +73,7 @@ $$|| w_e^{\star} - J_{e0} \dot{q} ||^2$$
 In the case $$J_{e0} $$ close to singularities, we can use a damped version of the Moore-Penrose pseudo-inverse which is similar to minimize the error $$\mid\mid w_e^{\star} - J_{e0} \dot{q} \mid\mid^2 + \lambda \mid\mid\dot{q}\mid\mid^2$$
 
 
-Dynamics 
+Dynamics
 
 Forward Dynamics
 
