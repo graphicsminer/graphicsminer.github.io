@@ -8,6 +8,8 @@ author: "Phuong Hoang"
 meta: "Springfield"
 ---
 
+
+![Sant Logo](/images/BayesianFiltering.JPEG)
 We are in the era of Kalman filter after the first blog. However, the un-answered question is that what if the prediction model (dynamic model function) and the observation model (the measurement model) are not linear.
 
 $$ x_k = f(x_{k-1}) + q_{k-1}$$

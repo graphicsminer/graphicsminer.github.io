@@ -41,6 +41,8 @@ But What is Kalman filter, why am I talking too much about Carl Friedrich Gauss.
 
 Let's make a motivation example to understand better about these above fashion terms: you've built a legged robot that can wander in your home and the robot should knows where it is to avoid colliding with many obstacles.
 
+![Sant Logo](/images/S-AntWandering.JPEG)
+
 We can assume that the robot has state **x** consists of a position and a velocity. You can add more variables to the state vectors such as temperature of the engine, amount of battery in the power part of your robot or any variables that makes senses to track.
 
 $$ x = \begin{pmatrix} p \\\ v \end{pmatrix} $$
@@ -53,7 +55,7 @@ The main question is: How can the robot automatically navigate in the unpredicte
 
 Before mathematically speaking about the problem, let's assume several conditions for the state of the robot and its measurement (GPS or any computer vision tracking object coordinates)
 
-
+![Sant Logo](/images/BayesianFiltering.JPEG)
 
 **Formulate the problem**
 The problem can be formulated as general probabilistic state space model:
