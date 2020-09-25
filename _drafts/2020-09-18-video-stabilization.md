@@ -13,8 +13,43 @@ meta: "Springfield"
 
 Video Stabilization is the process of estimating the undesired camera motion and wrapping the images and compensate for it. For example, the videos taken by hand-held cameras, smartphone cameras are often shaking. Thís can be done with hardware, e.g mordern cameras using OIS (Optical Image Stabilization). Beside that, there are many researchs using algorithm to against undesired vibrations, e.g deep neural network, CNNs ... But in this blog we'll not discuss deep neural net, just focus on classic techniques to solve this problem.
 
-There are four main steps in video stabilization process: motion estimation, motion compensation (or smoothing), image wrapping and finally cropping to remove empty regions at border of frames.
-We will walk through each step and discuss algorithms also a bit mathematic behind that. Remember, all solutions we will present are used in offline, if you want to learn the real time method, you can read more in [MeshFlow](http://www.liushuaicheng.org/eccv2016/). Now let's get started.
+These are example videos before and after stabilized.
+
+Original Video
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/)
+
+Stabilized Video
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/)
+
+## **Main Problem**
+
+The main problem is that, from a arbitrary video with vibrations, how can we reduce the vibrations in that video or in other words how to stabilize it?
+
+There are many researchs about this problem and almost of them follow 4 steps (illustrated in figure 1): motion estimation, motion compensation (or smoothing), image wrapping and finally cropping to remove empty regions at border of frames.
+
+<p align="center">
+    <img width="600"  src="/images/Steps_in_Video_stb.png"/>
+    <br>
+    <i>Figure 1: Steps in video stabilization process</i>
+</p>
+
+The first block is [motion estimation](#motion-estimation), used to calculate the motions of features in current frame also a transformation matrix between previous frame to current frame. Because of cameare vibrations, the motions will not smooth. Our purpose in the second block  is to smooth motions through transformation matrices of frames. In order to help you have different views in [motion compensation](#motion-compensation), we present three different approachs: [compositional local smoothing](#compositional-local-smoothing), [local matrix based smoothing](#local-matrix-based-smoothing) & [additive method](#additive-method); brief the advantages and disadvantages of each approach. [The two final steps](#wrapping-and-cropping) are pretty easy, we will brief them as shortly and easily to understand as possible.
+
+**Mathematical notations**
+
+There are some mathematical notations you should know before reading bellow sections.
+
+Image function is notated $$I(x,y)$$. This function have 2 parameters $$(x, y)$$ corresponding to coordinates of pixel on $$x$$ axis and $$y$$ axis. The value function return is the intensity of that pixel.
+
+We denote $$I_{x}$$ and $$I_{y}$$ are gradient of image corresponding in $$x$$ - axis and $$y$$ - axis.
+
+The vectors are denoted by lower case bold Roman letters, such that $$\mathbf{u}$$. And the matrices will be denoted by upper case, e.g $$M$$. One more, we denote $$Id$$ is the identity matrix.
+
+The notation $$H$$ is a tranformation matrix. It can be a translation, affinity, similarity, euclidiean or homography matrix.
+
+
 
 ## **Motion Estimation**
 
@@ -26,12 +61,12 @@ We could use Harris corner detection or SURF, SHIFT ... to detect features. The 
 
 **A Corner** is a point whose local neighborhood stands in two dominant and different edge directions. In other words, a corner can be interpreted as the junction of two edges, where an edge is a sudden change in image brightness [3]. Corners are the important features in the image, and they are generally termed as interest points which are invariant to translation, rotation and illumination.
 
-The Harris corner detector uses a window to "observe" each pixel and its neighbors, to characterizes "corner" as a point with big variation if shifting in any direction. If variation only happens for "some" directions, then the point should be "edge" and if no variation for any directions, it'll be "flat". You can see in figure 1.
+The Harris corner detector uses a window to "observe" each pixel and its neighbors, to characterizes "corner" as a point with big variation if shifting in any direction. If variation only happens for "some" directions, then the point should be "edge" and if no variation for any directions, it'll be "flat". You can see in figure 2.
 
 <p align="center">
     <img width="400"  src="/images/corner.png"/>
     <br>
-    <i>Figure 1: Intuition of Harris Corner Detector</i>
+    <i>Figure 2: Intuition of Harris Corner Detector</i>
 </p>
 
 The variation can be defined as a sum of square-distance (SSD) as below, $$(u, v)$$ denotes the shift, $$w(x,y)$$ is a window function, $$I(x,y)$$ is image function, at coordinate $$(x, y)$$ image has a certain intensity. We can usually choose a rectangle or gaussian function.
@@ -90,7 +125,7 @@ The paramater k is usually set to 0.04 - 0.06. If $$R$$ is large,it is corner. O
 <p align = "center">
     <img width="300"  src="/images/harris_region.jpg"/>
     <br>
-    <i>Figure 2: Harris Region</i>
+    <i>Figure 3: Harris Region</i>
 </p>
 
 
@@ -100,10 +135,10 @@ Phu
 
 ## **Motion Compensation**
 
-Phu Khang
+### **Compositional local smoothing**
 
 
-**Local matrix based smoothing**
+### **Local matrix based smoothing**
 
 This method was proposed in [4], we have refered the link below so you can read more. The figure 3 present the main ideal of algorithm.
 
@@ -121,19 +156,19 @@ $$H_{i,j;j>i} = \prod_{l=i}^{j} H_{l,l+1} = H_{j-1,j}H_{j-2,j-1}...H_{i-1,i}H_{i
 
 in a neigborhood, $$N_{i} = \{ j: i - k \leq j  \leq i + k\}$$ around frame $$i$$ and hyper parameter $$k$$ is smoothing radious.
 
-The algorithm smooths the transformation matrix of the frame by using gaussian function (the red bell curve in fig 3) and neigboring frames ' transformation matrix (e.g homography or affine). 
+The algorithm smooths the transformation matrix of the frame by using gaussian function (the red bell curve in fig 4) and neigboring frames ' transformation matrix (e.g homography or affine). 
 
 $$\widehat{H}_{i}(p, q) = \sum_{j = i - k}^{i+k}G_{\sigma}(i - j)H_{i,j}(p,q).$$
 
 with $$H_{i,i}$$ *is Identity matrix*.
 
-The $$\widehat{H}_{i}$$'ll transform the frame $$I_{i}$$ to frame $$\widehat{I}_{i}$$ (the blue frame in fig 3) and we assume that the frame $$\widehat{I}_{i}$$ after transformed is also stabilized frame $$I'_{i}$$.
+The $$\widehat{H}_{i}$$'ll transform the frame $$I_{i}$$ to frame $$\widehat{I}_{i}$$ (the blue frame in fig 4) and we assume that the frame $$\widehat{I}_{i}$$ after transformed is also stabilized frame $$I'_{i}$$.
 
 So easily, we can infer $$H'_{i} = \widehat{H}_{i}^{-1}$$.
 
 <p align = "center">
     <img src="/images/local_matrix_based.png"/>
-    <i> Figure 3: Local matrix-based smoothing </i>
+    <i> Figure 4: Local matrix-based smoothing </i>
 </p>
 
 The steps of local matrix-based smoothing are detailed in below.
@@ -167,8 +202,12 @@ The steps of local matrix-based smoothing are detailed in below.
 &21. \qquad H_{i}^{'} \leftarrow \widehat{H}_{i}^{-1}.
 &\end{aligned}$$
 
+**Result**
 
-**Additive method**
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/)
+
+
+### **Additive method**
 
 In this section, we will describe a simple strategy named **"Local linear matrix-based smoothing"** that avoid the compositional of matrices. The benefit of this method is that the errors produced by the compositions of matrices are not accumulated.
 
@@ -183,13 +222,14 @@ $$ \tilde{H_{i}}(p,q) = (G_{\sigma}*\{\bar{H_{j}}(p,q)\})_{i}
 = \sum_{j=-k}^{j=k}G_{\sigma}(j)\bar{H}_{i-j}(p,q)$$
 and then
 $$ \hat{H}_{i} = \tilde{H}_{i} - \bar{H}_{i} + Id$$
-* Finally, this method appoarch is then obtain by the rectifying transformation $$H_{i}^{'} = \bar{H}_i^{-1}$$
+* Finally, this method appoarch is then obtain by the rectifying transformation $$H_{i}^{'} = \bar{H}_i^{-1}$$.
 
 The concept of virtual trajectory is clearer in the case of point, where the virtual trajectory is not given by the true displacement of the points from frame to frame but by the apparent motion of the point in each position.
 
 The boundary conditions for this method are the same to the compositional strategy.
 
 The step of **Local linear matrix-based smoothing** can be illustrated in the algorithm below.
+
 >$$\begin{aligned}
 &\quad\mathbf{Input} : \{H\}, \sigma, bc\\
 &\quad\mathbf{Output}: \{H^{'}\}\\
@@ -203,7 +243,7 @@ The step of **Local linear matrix-based smoothing** can be illustrated in the al
 &8. \quad\quad H^{'} = \bar{H}_i^{-1}
 &\end{aligned}$$
 
-## Wrapping and Cropping
+## **Wrapping and Cropping**
 
 ### Crop and zoom strategy
 
@@ -261,14 +301,15 @@ $$I_i^{'}(x) = I_{i}(H_{i}^{'}Tx)$$
 
 This is because our $$H_{i}^{'}$$ and $$T$$ are used to describe the transformation from the stabilized frame back to the original frame. This relation can be used to determine the color value at each pixel for each new stabilized frame.
 
-## Conclusion
+## **Conclusion**
 
 In this report, we have descibed a work flow for video stabilization as well as different motion compensation strategies.
 
 The smoothing strategies a divided into compositional and addictive approaches. Compositional approaches tend to suffer more from errors in previous steps because they are accumulated throughout the frame.
  In contrast, addictive approaches tend to suffer less because of it's increment through addiction method. 
 
-The downsides of these appoarchs is that they are not fit to real-time implementation and can also yield bad result when the video quality is low, or the camera is too shaky, loss of perspective ,etc. There is a more power method which can eliminate these downside named **Mesh Flow**, but we will discuss this in another day.
+The downsides of these appoarchs is that they are not fit to real-time implementation and can also yield bad result when the video quality is low, or the camera is too shaky, loss of perspective ,etc. There is a more power method which can eliminate these downside named [MeshFlow](http://www.liushuaicheng.org/eccv2016/), but we will discuss this in another day.
+
 ## **Reference**
 
 [1] <https://www.ipol.im/pub/art/2017/209/>
