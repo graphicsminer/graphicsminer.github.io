@@ -153,7 +153,7 @@ Have you seen the similarity of this and that of previous? :)
 
 ### Vector - valued Images
 
-Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = <I, \dfrac{I_x}{|\nabla I|}>$$.
+Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = <I, \dfrac{I_x}{\vert\nabla I\vert}, \dfrac{I_y}{\vert\nabla I\vert}, \dfrac{2I_xI_y}{\vert\nabla I\vert}>$$.
 
 The update equation for $$\mu_i$$ and $$\Sigma_i$$ will be:
 
