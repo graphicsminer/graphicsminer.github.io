@@ -13,13 +13,13 @@ Convolution neural networks usually appear in segmentation problems because of i
 
 ## **Formulation**
 
-Let $I: \Omega \rightarrow \mathbb{R}$ be a gray scale image, where $\Omega \subset \mathbb{R}^2$. The curve that segments image $I$ into 2 partitions is denoted as $C: [0, 1] \rightarrow \Omega$, in other words $C = (x(s), y(s))$ where $s \in [0, 1]$.
+Let $$I: \Omega \rightarrow \mathbb{R}$$ be a gray scale image, where $$\Omega \subset \mathbb{R}^2$$. The curve that segments image $I$ into 2 partitions is denoted as $$C: [0, 1] \rightarrow \Omega$$, in other words $$C = (x(s), y(s))$ where $s \in [0, 1]$$.
 
-There are innumerable curves $C$, so how do we know which one is the most suitable for a given image? To answer that, Kass et al [[1]](#1) proposed an energy function $E(C)$ and the process of finding $C$ is minimizing $E(C)$:
+There are innumerable curves $$C$$, so how do we know which one is the most suitable for a given image? To answer that, Kass et al [[1]](#1) proposed an energy function $$E(C)$$ and the process of finding $$C$$ is minimizing $$E(C)$$:
 
 $$E(C) = E_{int}(C) + E_{image}(C)$$
 
-The internal energy $E_{int}(C)$ contains 2 small terms:
+The internal energy $$E_{int}(C)$$ contains 2 small terms:
 
 * Continuity term:
     $$E_{cont}(C) = \int_0^1  |C_s|^2 \, ds = \int_0^1 \left|\dfrac{\partial x}{\partial s}\right|^2 + \left|\dfrac{\partial y}{\partial s}\right|^2 ds $$
@@ -45,9 +45,9 @@ $$E(C) = \dfrac{1}{2} \int_0^1 - |\nabla I(C)|^2 + \alpha (s) |C_s|^2 + \beta (s
 
 ### **Euler - Lagrange equation**
 
-What we need to find right now is not finite number of parameters but actually the **function $C$** and how we minimize energy function $E$ where $C$ is an argument?
+What we need to find right now is not finite number of parameters but actually the **function $C$** and how we minimize energy function $$E$$ where $$C$$ is an argument?
 
-According to Euler - Lagrange equation, the optimal function $f$ must hold the necessary condition (Read more at [here](https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation)). The energy function can be written in the form:
+According to Euler - Lagrange equation, the optimal function $$f$$ must hold the necessary condition (Read more at [here](https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation)). The energy function can be written in the form:
 
 $$\begin{equation}
   E(C) = \int_0^1L(C, C_s, C_{ss}) \, ds
@@ -63,40 +63,40 @@ In fact, this necessary condition does not guarantee that the solution is global
 
 Continue to expand the above equation and get:
 
-Since $C = (x(s), y(s))$, we will take derivative two times, respect to $x$ and to $y$.
+Since $$C = (x(s), y(s))$$, we will take derivative two times, respect to $$x$$ and to $$y$$.
 
-* $x = x(s)$
+* $$x = x(s)$$
 $$\begin{aligned}
   \dfrac{dE}{dx} &= \dfrac{\partial L}{\partial x} - \dfrac{\partial}{\partial s}\left(\dfrac{\partial L}{\partial x_s}\right) + \dfrac{\partial ^2}{\partial s^2}\left(\dfrac{\partial L}{\partial x_{ss}}\right) \\
   &= -(I_{x}I_{xx} + I_yI_{yx}) - \alpha (s) \dfrac{\partial x'}{\partial s} + \beta (s) \dfrac{\partial x''}{\partial s^2} \\
   &= -(I_{x}I_{xx} + I_yI_{yx}) - \alpha (s) x^{(2)} + \beta (s) x^{(4)}
 \end{aligned}$$
 
-where $x^{(2)}$ and $x^{(4)}$ respectively, are  the second and fourth order derivative of $x$ respect to $s$.
+where $$x^{(2)}$$ and $$x^{(4)}$$ respectively, are  the second and fourth order derivative of $$x$$ respect to $$s$$.
 
-* $y = y(s)$
+* $$y = y(s)$$
 $$\begin{aligned}
   \dfrac{dE}{dy} &= \dfrac{\partial L}{\partial y} - \dfrac{\partial}{\partial s}\left(\dfrac{\partial L}{\partial y_s}\right) + \dfrac{\partial ^2}{\partial s^2}\left(\dfrac{\partial L}{\partial y_{ss}}\right) \\
   &= -(I_{x}I_{xy} + I_yI_{yy}) - \alpha (s) y^{(2)} + \beta (s) y^{(4)}
 \end{aligned}$$
 
-For the sake of simplicity, both weight parameters $\alpha(s)$ and $\beta(s)$ are considered as constant $\alpha$ and $\beta$.
+For the sake of simplicity, both weight parameters $$\alpha(s)$$ and $$\beta(s)$$ are considered as constant $\alpha$ and $\beta$.
 
-*Note: If you see some below expressions are a little bit challenging, you can read this blog [this](https://huynguyenbao.github.io/posts/2021/08/variational-methods/) to read this to have sense.*
+*Note: If you see some below expressions are a little bit challenging, you can read this blog [this](https://huynguyenbao.github.io/posts/2021/08/variational-methods/) to have sense of how this method works.*
 
 ### **Finite Difference**
 
-In reality, we define the curve $C$ by a set of points $\{x_i, y_i\}$ not by parametric functions, so to find $x^{(2)}$ and $x^{(4)}$, the **central difference** will be used. (Read more at [here](https://en.wikipedia.org/wiki/Finite_difference))
+In reality, we define the curve $$C$$ by a set of points $$\{x_i, y_i\}$$ not by parametric functions, so to find $$x^{(2)}$$ and $$x^{(4)}$$, the **central difference** will be used. (Read more at [here](https://en.wikipedia.org/wiki/Finite_difference))
 
 $$\begin{aligned}
   x^{(2)}(s) &\approx \dfrac{x(s + h) - 2x(s) + x(s-h)}{h^2} \\
   x^{(4)}(s) &\approx \dfrac{x(s + 2h) - 4x(s + h) + 6x(s) - 4x(s-h) + x(s - 2h)}{h^4} \\
 \end{aligned}$$
 
-We can also rewrite these equations above in the matrix form. 
+We can also rewrite these equations above in the matrix form.
 
 $$\begin{equation}
-  X^{(2)} \approx 
+  X^{(2)} \approx
        \left[\begin{array}{c}
             -2 & 1 & 0 & \cdots & 0 & 1 \\
             1 & -2 & 1 & \cdots & 0 & 0 \\
@@ -135,29 +135,29 @@ $$\begin{equation}
         \end{array}\right] = A_4 X
 \end{equation}$$
 
-Finally, the term $-\alpha x^{(2)} + \beta x^{(4)}$ in Euler - Lagrange equation above is rewriten as matrix form: $-\alpha A_2 X + \beta A_4X$
+Finally, the term $$-\alpha x^{(2)} + \beta x^{(4)}$$ in Euler - Lagrange equation above is rewriten as matrix form: $$-\alpha A_2 X + \beta A_4X$$.
 
-This is applied the same to $Y^{(2)}$ and $Y^{(4)}$.
+This is applied the same to $$Y^{(2)}$$ and $$Y^{(4)}$$.
 
 ### **Implicit Euler method**
 
-To simplify notation, let $A = -\alpha A_2 + \beta A_4$ and $P_x = I_xI_{xx} + I_yI_{yx}$.
+To simplify notation, let $$A = -\alpha A_2 + \beta A_4$$ and $$P_x = I_xI_{xx} + I_yI_{yx}$$.
 
 The Euler - Lagrange equation becomes:
 
 $$\dfrac{dE}{dX} = -P_x(X) + AX$$
 
-In this step, we will use [implicit Euler method](https://en.wikipedia.org/wiki/Backward_Euler_method) and consider $P_x(X)$ as constant:
+In this step, we will use [implicit Euler method](https://en.wikipedia.org/wiki/Backward_Euler_method) and consider $$P_x(X)$$ as constant:
 
 $$\dfrac{1}{\gamma}(X_t - X_{t+1}) = -P_x(X_t) + AX_{t+1}$$
 
-where $\gamma$ is step size.
+where $$\gamma$$ is step size.
 
-Finally, the $X_{t+1}$ is obtained by:
+Finally, the $$X_{t+1}$$ is obtained by:
 
 $$X_{t+1} = (\gamma A + I_d)^{-1}(\gamma P_x(X_t) + X_t)$$
 
-The update equation for $Y_{t+1}$ is the same:
+The update equation for $$Y_{t+1}$$ is the same:
 
 $$Y_{t+1} = (\gamma A + I_d)^{-1}(\gamma P_y(Y_t) + Y_t)$$
 
