@@ -41,7 +41,7 @@ $$\begin{aligned}
 \end{aligned}
 $$
 
-The curcial step of this method is to replace an unknown curve $$C: [0, 1] \rightarrow \Omega \sub \mathbb{R}^2$$ by **an unknown surface $$\phi: \Omega \sub \mathbb{R}^2 \rightarrow \mathbb{R}$$**. The curve $$C$$, region inside $$C$$ $$R_i$$ and outside $$C$$ $$R_o$$ can be re - defined:
+The curcial step of this method is to replace an unknown curve $$C: [0, 1] \rightarrow \Omega \subset \mathbb{R}^2$$ by **an unknown surface $$\phi: \Omega \subset \mathbb{R}^2 \rightarrow \mathbb{R}$$**. The curve $$C$$, region inside $$C$$ $$R_i$$ and outside $$C$$ $$R_o$$ can be re - defined:
 
 $$\begin{equation*}
 \begin{cases}
