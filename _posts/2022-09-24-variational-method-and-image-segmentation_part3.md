@@ -13,9 +13,9 @@ This blog will show you the general version of [active contours model](https://g
 
 ## Problem
 
-Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega)\midI)$$ and the Bayes's rule for this conditional probability is:
+Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega)\mid I)$$ and the Bayes's rule for this conditional probability is:
 
-$$p(\mathcal{P}(\Omega)\midI) = \dfrac{p(I\mid \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
+$$p(\mathcal{P}(\Omega)\mid I) = \dfrac{p(I\mid \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
 
 Since it is not easily to find $$p(I)$$ of an input image so this term will be considered as constant.
 
