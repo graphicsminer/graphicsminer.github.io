@@ -85,7 +85,10 @@ $$
 
 * The energy function:
 
-$$E(\phi, \theta_1, \theta_2) = \iint_{\Omega} H(\phi(x, y)) \operatorname{log}(p(f_1(x, y)| \theta_1)) + (1 - H(\phi(x, y))) \operatorname{log}(p(f_2(x, y)| \theta_2)) + \nu \delta(\phi(x ,y))|\nabla \phi(x, y)| \,dx \, dy$$
+$$\begin{aligned}
+    E(\phi, \theta_1, \theta_2) &= \iint_{\Omega} H(\phi(x, y)) \operatorname{log}(p(f_1(x, y)| \theta_1)) \\ 
+    &+ (1 - H(\phi(x, y))) \operatorname{log}(p(f_2(x, y)| \theta_2)) \\&+ \nu \delta(\phi(x ,y))|\nabla \phi(x, y)| \,dx \, dy
+\end{aligned}$$
 
 where 
 $$\begin{equation*}
@@ -97,7 +100,7 @@ H(x) = \begin{cases}
 
 ## Solutions
 
-Again, the method solving this problem is **Euler - Lagrange Equation** and **gradient decent**. We recommend you read other blogs in [here](https://graphicsminer.github.io/mathematics/2022/09/22/variational-methods-and-image-segmentation_part2.html), [here](https://graphicsminer.github.io/mathematics/2022/09/20/variational-methods-and-image-segmentation_part1.html) and [here](https://huynguyenbao.github.io/posts/2021/08/variational-methods/) to familiarize yourself with the way we expand formulation.
+Again, the method solving this problem is **Euler - Lagrange Equation** and **gradient decent**. We recommend you read [this](https://graphicsminer.github.io/mathematics/2022/09/22/variational-methods-and-image-segmentation_part2.html) to familiarize yourself with the way we expand formulation.
 
 $$
     E(\phi, \theta_1, \theta_2) = \underset{\Omega}{\iint} L(\phi, \nabla \phi, \theta_1, \theta_2) \, dx \, dy
@@ -131,7 +134,7 @@ where $$\epsilon = 10^{-6}.$$
 
 ### Grey Scale Images
 
-In some cases and for the sake of simplicity (also running time), we can assume that feature vector $$f$$ is intensity, the distribution $$p(f_i|\theta_i)$$ is Gaussian:
+In some cases and for the sake of simplicity (also running time), we can assume that feature vector $$f$$ is intensity, the distribution $$p(f_i \mid \theta_i)$$ is Gaussian:
 
 $$p(f_i|\theta) = p(I|\mu_i, \sigma_i) = \dfrac{1}{\sqrt{2\pi\sigma_i^2}}\operatorname{exp}\{-\dfrac{(I - \mu_i)^2}{2\sigma_i^2}\}.$$
 
@@ -153,7 +156,7 @@ Have you seen the similarity of this and that of previous? :)
 
 ### Vector - valued Images
 
-Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = <I, \dfrac{I_x}{\vert\nabla I\vert}, \dfrac{I_y}{\vert\nabla I\vert}, \dfrac{2I_xI_y}{\vert\nabla I\vert}>$$.
+Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = \left<I, \dfrac{I_x}{\vert\nabla I\vert}, \dfrac{I_y}{\vert\nabla I\vert}, \dfrac{2I_xI_y}{\vert\nabla I\vert}\right>$$.
 
 The update equation for $$\mu_i$$ and $$\Sigma_i$$ will be:
 
