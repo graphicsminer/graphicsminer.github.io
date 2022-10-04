@@ -13,33 +13,33 @@ This blog will show you the general version of [active contours model](https://g
 
 ## Problem
 
-Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega)\middleI)$$ and the Bayes's rule for this conditional probability is:
+Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega)\midI)$$ and the Bayes's rule for this conditional probability is:
 
-$$p(\mathcal{P}(\Omega)\middleI) = \dfrac{p(I\middle \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
+$$p(\mathcal{P}(\Omega)\midI) = \dfrac{p(I\mid \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
 
 Since it is not easily to find $$p(I)$$ of an input image so this term will be considered as constant.
 
 The posteriori probability now is:
-$$p(\mathcal{P}(\Omega) \middle I) \propto p(I\middle \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega)).$$
+$$p(\mathcal{P}(\Omega) \mid I) \propto p(I\mid \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega)).$$
 
 The prior $$p(\mathcal{P}(\Omega))$$ is our prior knowledge about the partition to tackle with missing information. Usually, people choose the curve $$C$$ having a length as short as possible:
 
 $$p(\mathcal{P}(\Omega)) \propto e^{-\nu |C|}$$
 where $$\nu > 0$$.
 
-To specify the likelihood term $$p(I\middle\mathcal{P}(\Omega))$$, we would make an assumption which is small regions of the partition $$\mathcal{P(\Omega)}$$ are not overlapping, so the likelihood term can be expanded:
+To specify the likelihood term $$p(I\mid\mathcal{P}(\Omega))$$, we would make an assumption which is small regions of the partition $$\mathcal{P(\Omega)}$$ are not overlapping, so the likelihood term can be expanded:
 
 $$\begin{aligned}
-    p(I \middle \mathcal{P}(\Omega)) &= p(I \middle \{\Omega_1, \Omega_2, \cdots, \Omega_n\}) \\
-    &= p( (I\middle \Omega_1) \cap  (I\middle \Omega_2) \cap \cdots \cap (I\middle \Omega_n)) \\
-    &= \prod_{i = 1}^n p (I \middle \Omega_i)
+    p(I \mid \mathcal{P}(\Omega)) &= p(I \mid \{\Omega_1, \Omega_2, \cdots, \Omega_n\}) \\
+    &= p( (I\mid \Omega_1) \cap  (I\mid \Omega_2) \cap \cdots \cap (I\mid \Omega_n)) \\
+    &= \prod_{i = 1}^n p (I \mid \Omega_i)
 \end{aligned}$$
 
 Assume that each region $$\Omega_i$$ has a feature function $$f_i(x, y)$$ associating with each pixel location. This feature function can be a scalar value (e.g intensity of image), or a feature vector composing image gradients, color.
 
 Another assumption that would be made is each pixel in each region is independent and identically distributed. The above expression can be read:
 
-$$p(I \middle \mathcal{P}(\Omega)) = \prod_{i = 1}^n \prod_{(x, y) \in \Omega_i} p (f_i(x, y))^{dx \,dy}$$
+$$p(I \mid \mathcal{P}(\Omega)) = \prod_{i = 1}^n \prod_{(x, y) \in \Omega_i} p (f_i(x, y))^{dx \,dy}$$
 
 This assumption sometimes does not hold when we have image gradient in feature vector $$f$$. Others argue that neighbor pixels are not i.i.d but actually have correlation due to similar intensities. However, at least, the assumption can give a chance to find an acceptable solution.
 
@@ -51,7 +51,7 @@ For simple cases, the distribution $$p(f_i(x, y))$$ can be non parametric, but i
 
 The complex version of the above energy function is:
 
-$$E(\mathcal{P}(\Omega), \{\theta_i\}) = -\sum_{i=1}^n\iint_{\Omega_i} \operatorname{log}(p(f_i(x, y) \middle \theta_i)) \,dx \, dy - \nu |C|$$
+$$E(\mathcal{P}(\Omega), \{\theta_i\}) = -\sum_{i=1}^n\iint_{\Omega_i} \operatorname{log}(p(f_i(x, y) \mid \theta_i)) \,dx \, dy - \nu |C|$$
 
 ## Binary Segmentation
 
