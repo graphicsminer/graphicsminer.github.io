@@ -13,7 +13,7 @@ Convolution neural networks usually appear in segmentation problems because of i
 
 ## **Formulation**
 
-Let $$I: \Omega \rightarrow \mathbb{R}$$ be a gray scale image, where $$\Omega \subset \mathbb{R}^2$$. The curve that segments image $I$ into 2 partitions is denoted as $$C: [0, 1] \rightarrow \Omega$$, in other words $$C = (x(s), y(s))$ where $s \in [0, 1]$$.
+Let $$I: \Omega \rightarrow \mathbb{R}$$ be a gray scale image, where $$\Omega \subset \mathbb{R}^2$$. The curve that segments image $I$ into 2 partitions is denoted as $$C: [0, 1] \rightarrow \Omega$$, in other words $$C = (x(s), y(s))$$ where $$s \in [0, 1]$$.
 
 There are innumerable curves $$C$$, so how do we know which one is the most suitable for a given image? To answer that, Kass et al [[1]](#1) proposed an energy function $$E(C)$$ and the process of finding $$C$$ is minimizing $$E(C)$$:
 
@@ -45,7 +45,7 @@ $$E(C) = \dfrac{1}{2} \int_0^1 - |\nabla I(C)|^2 + \alpha (s) |C_s|^2 + \beta (s
 
 ### **Euler - Lagrange equation**
 
-What we need to find right now is not finite number of parameters but actually the **function $C$** and how we minimize energy function $$E$$ where $$C$$ is an argument?
+What we need to find right now is not finite number of parameters but actually the **function $$C$$** and how we minimize energy function $$E$$ where $$C$$ is an argument?
 
 According to Euler - Lagrange equation, the optimal function $$f$$ must hold the necessary condition (Read more at [here](https://en.wikipedia.org/wiki/Euler%E2%80%93Lagrange_equation)). The energy function can be written in the form:
 
@@ -80,7 +80,7 @@ $$\begin{aligned}
   &= -(I_{x}I_{xy} + I_yI_{yy}) - \alpha (s) y^{(2)} + \beta (s) y^{(4)}
 \end{aligned}$$
 
-For the sake of simplicity, both weight parameters $$\alpha(s)$$ and $$\beta(s)$$ are considered as constant $\alpha$ and $\beta$.
+For the sake of simplicity, both weight parameters $$\alpha(s)$$ and $$\beta(s)$$ are considered as constant $$\alpha$$ and $$\beta$$.
 
 *Note: If you see some below expressions are a little bit challenging, you can read this blog [this](https://huynguyenbao.github.io/posts/2021/08/variational-methods/) to have sense of how this method works.*
 
