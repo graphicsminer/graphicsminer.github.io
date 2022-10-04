@@ -7,11 +7,11 @@ image: /thumbnail-mobile.png
 author: "Bao-Huy Nguyen"
 meta: "Springfield"
 ---
-## **Snakes: Active Contours Models**
+## Snakes: Active Contours Models
 
 Convolution neural networks usually appear in segmentation problems because of its high adaptation to many datasets and high performance. However, in return, they require ground truth data to learn and perform specific tasks, without ground truth their results are really poor. Today, we will introduce to you an "old" segmentation method but it can be applied in several certain problems in absence of datasets. This is called *Snakes: Active Contours Models*.
 
-## **Formulation**
+## Formulation
 
 Let $$I: \Omega \rightarrow \mathbb{R}$$ be a gray scale image, where $$\Omega \subset \mathbb{R}^2$$. The curve that segments image $I$ into 2 partitions is denoted as $$C: [0, 1] \rightarrow \Omega$$, in other words $$C = (x(s), y(s))$$ where $$s \in [0, 1]$$.
 
@@ -41,9 +41,9 @@ The total energy function needed to minimize is:
 
 $$E(C) = \dfrac{1}{2} \int_0^1 - |\nabla I(C)|^2 + \alpha (s) |C_s|^2 + \beta (s) |C_{ss}| \, ds $$
 
-## **Solution**
+## Solution
 
-### **Euler - Lagrange equation**
+### Euler - Lagrange equation
 
 What we need to find right now is not finite number of parameters but actually the **function $$C$$** and how we minimize energy function $$E$$ where $$C$$ is an argument?
 
@@ -84,7 +84,7 @@ For the sake of simplicity, both weight parameters $$\alpha(s)$$ and $$\beta(s)$
 
 *Note: If you see some below expressions are a little bit challenging, you can read this blog [this](https://huynguyenbao.github.io/posts/2021/08/variational-methods/) to have sense of how this method works.*
 
-### **Finite Difference**
+### Finite Difference
 
 In reality, we define the curve $$C$$ by a set of points $$\{x_i, y_i\}$$ not by parametric functions, so to find $$x^{(2)}$$ and $$x^{(4)}$$, the **central difference** will be used. (Read more at [here](https://en.wikipedia.org/wiki/Finite_difference))
 
@@ -139,7 +139,7 @@ Finally, the term $$-\alpha x^{(2)} + \beta x^{(4)}$$ in Euler - Lagrange equati
 
 This is applied the same to $$Y^{(2)}$$ and $$Y^{(4)}$$.
 
-### **Implicit Euler method**
+### Implicit Euler method
 
 To simplify notation, let $$A = -\alpha A_2 + \beta A_4$$ and $$P_x = I_xI_{xx} + I_yI_{yx}$$.
 
@@ -161,7 +161,7 @@ The update equation for $$Y_{t+1}$$ is the same:
 
 $$Y_{t+1} = (\gamma A + I_d)^{-1}(\gamma P_y(Y_t) + Y_t)$$
 
-## **Results**
+## Results
 
 Input Images             |  Results
 :-----------------------:|:-------------------------:
