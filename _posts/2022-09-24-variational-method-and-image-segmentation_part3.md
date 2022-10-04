@@ -93,8 +93,8 @@ $$\begin{aligned}
 where 
 $$\begin{equation*}
 H(x) = \begin{cases}
-1 & \quad x >= 0, \\
-0 & \quad x < 0.
+1 & \quad x \ge 0, \\
+0 & \quad x \lt 0.
 \end{cases}
 \end{equation*}$$
 

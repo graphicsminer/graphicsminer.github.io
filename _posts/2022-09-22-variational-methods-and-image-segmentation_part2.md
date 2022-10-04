@@ -21,9 +21,9 @@ where $$c_i$$ and $$c_o$$ respectively are the average $$I(x,y)$$ in $$R_i$$ and
 
 Intuitively, we can notice this energy function makes sense since:
 
-* If the curve $$C$$ is inside an object, $$E_i \approx 0$$ and $$E_o > 0$$.
-* If the curve $$C$$ is outside an object, $$E_i > 0$$ and $$E_o \approx 0$$.
-* If the curve $$C$$ is both inside and outside an object, $$E_i > 0$$ and $$E_o > 0$$.
+* If the curve $$C$$ is inside an object, $$E_i \approx 0$$ and $$E_o \gt 0$$.
+* If the curve $$C$$ is outside an object, $$E_i \gt 0$$ and $$E_o \approx 0$$.
+* If the curve $$C$$ is both inside and outside an object, $$E_i \gt 0$$ and $$E_o \gt 0$$.
 * If the curve $$C$$ can segment an object perfectly, $$E_i \approx 0$$ and $$E_o \approx 0$$.
 
 Curve inside an object            |  Curve outside an object
@@ -46,8 +46,8 @@ The curcial step of this method is to replace an unknown curve $$C: [0, 1] \righ
 $$\begin{equation*}
 \begin{cases}
 C &= \{(x, y) \in \Omega \, | \, \phi(x, y) = 0\} \\
-inside (C) &= \{(x, y) \in \Omega \, | \, \phi(x, y) > 0\} \\
-outside (C) &= \{(x, y) \in \Omega \, | \, \phi(x, y) < 0\}
+inside (C) &= \{(x, y) \in \Omega \, | \, \phi(x, y) \gt 0\} \\
+outside (C) &= \{(x, y) \in \Omega \, | \, \phi(x, y) \lt 0\}
 \end{cases}
 \end{equation*}$$
 
@@ -63,8 +63,8 @@ where:
 * Heaviside step function is defined:
 $$\begin{equation*}
 H(x) = \begin{cases}
-1 & \quad x >= 0, \\
-0 & \quad x < 0.
+1 & \quad x \ge 0, \\
+0 & \quad x \lt 0.
 \end{cases}
 \end{equation*}$$
  
