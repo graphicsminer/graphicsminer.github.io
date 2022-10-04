@@ -13,7 +13,7 @@ This blog will show you the general version of [active contours model](https://g
 
 ## Problem
 
-Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega)|I)$$ and the Bayes's rule for this conditional probability is:
+Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** and the Bayes's rule for this conditional probability is:
 
 $$p(\mathcal{P}(\Omega)|I) = \dfrac{p(I| \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
 
@@ -153,7 +153,7 @@ Have you seen the similarity of this and that of previous? :)
 
 ### Vector - valued Images
 
-Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image.
+Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = \left<I, \dfrac{I_x}{|\nabla I|}, \dfrac{I_y}{|\nabla I|}, \dfrac{2I_xI_y}{|\nabla I|} \right>$$.
 
 The update equation for $$\mu_i$$ and $$\Sigma_i$$ will be:
 
