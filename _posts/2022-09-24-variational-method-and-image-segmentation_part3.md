@@ -13,9 +13,9 @@ This blog will show you the general version of [active contours model](https://g
 
 ## Problem
 
-Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega) | I)$$ and the Bayes's rule for this conditional probability is:
+Finding an optimal partition $$\mathcal{P}(\Omega)$$ which segments an input image $$I$$ can be seen as problem of maximizing a **posteriori probability** $$p(\mathcal{P}(\Omega)|I)$$ and the Bayes's rule for this conditional probability is:
 
-$$p(\mathcal{P}(\Omega) | I) = \dfrac{p(I| \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
+$$p(\mathcal{P}(\Omega)|I) = \dfrac{p(I| \mathcal{P}(\Omega)) \, p(\mathcal{P}(\Omega))}{p(I)}.$$
 
 Since it is not easily to find $$p(I)$$ of an input image so this term will be considered as constant.
 
@@ -27,7 +27,7 @@ The prior $$p(\mathcal{P}(\Omega))$$ is our prior knowledge about the partition 
 $$p(\mathcal{P}(\Omega)) \propto e^{-\nu |C|}$$
 where $$\nu > 0$$.
 
-To specify the likelihood term $$p(I | \mathcal{P}(\Omega))$$, we would make an assumption which is small regions of the partition $$\mathcal{P(\Omega)}$$ are not overlapping, so the likelihood term can be expanded:
+To specify the likelihood term $$p(I|\mathcal{P}(\Omega))$$, we would make an assumption which is small regions of the partition $$\mathcal{P(\Omega)}$$ are not overlapping, so the likelihood term can be expanded:
 
 $$\begin{aligned}
     p(I | \mathcal{P}(\Omega)) &= p(I | \{\Omega_1, \Omega_2, \cdots, \Omega_n\}) \\
@@ -153,7 +153,7 @@ Have you seen the similarity of this and that of previous? :)
 
 ### Vector - valued Images
 
-Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = \left<I, \dfrac{I_x}{|\nabla I|}, \dfrac{I_y}{|\nabla I|}, \dfrac{2I_xI_y}{|\nabla I|} \right>$$.
+Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image.
 
 The update equation for $$\mu_i$$ and $$\Sigma_i$$ will be:
 
