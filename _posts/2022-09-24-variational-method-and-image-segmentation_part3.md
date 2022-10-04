@@ -25,7 +25,7 @@ $$p(\mathcal{P}(\Omega) | I) \propto p(I| \mathcal{P}(\Omega)) \, p(\mathcal{P}(
 The prior $$p(\mathcal{P}(\Omega))$$ is our prior knowledge about the partition to tackle with missing information. Usually, people choose the curve $$C$$ having a length as short as possible:
 
 $$p(\mathcal{P}(\Omega)) \propto e^{-\nu |C|}$$
-where $\nu > 0$.
+where $$\nu > 0$$.
 
 To specify the likelihood term $$p(I | \mathcal{P}(\Omega))$$, we would make an assumption which is small regions of the partition $$\mathcal{P(\Omega)}$$ are not overlapping, so the likelihood term can be expanded:
 
@@ -153,9 +153,9 @@ Have you seen the similarity of this and that of previous? :)
 
 ### Vector - valued Images
 
-Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = \left<I, \dfrac{I_x}{|\nabla I|}, \dfrac{I_y}{|\nabla I|}, \dfrac{2I_xI_y}{|\nabla I|} \right>$$
+Our assumption for feature vector $$f_i$$ can also be color vector $$f = \left<R, G, B\right>$$ or based on the structure of image $$f = \left<I, \dfrac{I_x}{|\nabla I|}, \dfrac{I_y}{|\nabla I|}, \dfrac{2I_xI_y}{|\nabla I|} \right>$$.
 
-and the update equation for $$\mu_i$$ and $$\Sigma_i$$ will be:
+The update equation for $$\mu_i$$ and $$\Sigma_i$$ will be:
 
 $$\begin{aligned}
     \mu_i &= \dfrac{1}{|\Omega_i|}\underset{\Omega_i}{\iint} H(\phi (x, y)) I(x, y) \, dx \, dy \\
