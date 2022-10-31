@@ -133,7 +133,7 @@ So the final posterior equation is:
 
 $$E = P(u \mid \Omega_3) = \prod_{\textbf{v} \in \Omega_3}\{ uP_i + (1 - u)P_o\}$$
 
-There are many numerical optimization methods to maximize this posteriori (basically it is likelihood) such as taking logarithm and using gradient descent, projected gradient descent or Gauss Newton Strategy. However for globally solvable formulation, Victor et al [[1]](#1) replaced logarithmic opinion pool by a linear opinion pool to fuse pixel - wise posteriors and added weighted surface regularization term:
+There are many numerical optimization methods to maximize this posterior (basically it is likelihood) such as taking logarithm and using gradient descent, projected gradient descent or Gauss Newton Strategy. However for globally solvable formulation, Victor et al [[1]](#1) replaced logarithmic opinion pool by a linear opinion pool to fuse pixel - wise posteriors and added weighted surface regularization term:
 
 $$E = \sum_{\textbf{v} \in \Omega_3}\{uP_i + (1 - u) P_o + \alpha |\nabla u| \}$$
 

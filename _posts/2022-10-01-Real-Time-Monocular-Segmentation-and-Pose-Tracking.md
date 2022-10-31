@@ -179,15 +179,15 @@ To reduce the complexity, Victor et al [[1]](#1) eliminated the prior term to ge
 
 $$P(\Phi, \textbf{p} \mid \Omega) \propto \prod_{\textbf{x, c} \in \Omega } \sum_{i=\{f, b\}} \{P(\textbf{x} \mid R_i, \Phi, \textbf{p})\, P(R_i \mid \textbf{c})\}$$
 
-**Maximizing likelihood is also equivalent to minimizing logarithm likelihood**:
+**Maximizing likelihood is also equivalent to minimizing negative logarithm likelihood**:
 
-$$\underset{\textbf{p}}{\operatorname{arg min}} \log{P(\Phi, \textbf{p}\mid \Omega)} = \sum_{\textbf{x}, \textbf{c}\in \Omega} \operatorname{log}\left(\sum_{i=\{f, b\}} P(\textbf{x} \mid R_i, \Phi, \textbf{p})\, P(R_i \mid \textbf{c})\right)$$
+$$\underset{\textbf{p}}{\operatorname{arg min}} \log{P(\Phi, \textbf{p}\mid \Omega)} = \sum_{\textbf{x}, \textbf{c}\in \Omega} -\operatorname{log}\left(\sum_{i=\{f, b\}} P(\textbf{x} \mid R_i, \Phi, \textbf{p})\, P(R_i \mid \textbf{c})\right)$$
 
-### Minimize Logarithm Likelihood
+### Minimize Negative Logarithm Likelihood
 
-Our goal now is to minimize the log likelihood:
+Our goal now is to minimize the negative log likelihood:
 
-$$\underset{\textbf{p}}{\operatorname{arg min}} \log{P(\Phi, \textbf{p}\mid \Omega)} = \sum_{\textbf{x}, \textbf{c}\in \Omega} \operatorname{log}\left(\sum_{i=\{f, b\}} P(\textbf{x} \mid R_i, \Phi, \textbf{p})\, P(R_i \mid \textbf{c})\right)$$
+$$\underset{\textbf{p}}{\operatorname{arg min}} \log{P(\Phi, \textbf{p}\mid \Omega)} = \sum_{\textbf{x}, \textbf{c}\in \Omega} -\operatorname{log}\left(\sum_{i=\{f, b\}} P(\textbf{x} \mid R_i, \Phi, \textbf{p})\, P(R_i \mid \textbf{c})\right)$$
 
 To solve this optimization problem, we need to know the explicit probability of each term in the equation:
 
@@ -257,9 +257,9 @@ Two likelihood $$P(\textbf{c} \mid R_f)$$ and $$P(\textbf{c} \mid R_b)$$ are rep
 
 $$\begin{aligned}
     E(\Phi, \textbf{p}) 
-    &= \sum_{\textbf{x}, \textbf{c} \in \Omega} \operatorname{log}(\dfrac{H(\Phi(\textbf{x}))}{\eta_f}\dfrac{P(\textbf{c} \mid R_f)\eta_f}{P(\textbf{c} \mid R_f) \eta_f+ P(\textbf{c} \mid R_b) \eta_b} \\ 
+    &= \sum_{\textbf{x}, \textbf{c} \in \Omega} -\operatorname{log}(\dfrac{H(\Phi(\textbf{x}))}{\eta_f}\dfrac{P(\textbf{c} \mid R_f)\eta_f}{P(\textbf{c} \mid R_f) \eta_f+ P(\textbf{c} \mid R_b) \eta_b} \\ 
     &+ \dfrac{1 - H(\Phi(\textbf{x}))}{\eta_b}\dfrac{P(\textbf{c} \mid R_b)\eta_b}{P(\textbf{c} \mid R_f) \eta_f+ P(\textbf{c} \mid R_b) \eta_b} )\\
-    &= \sum_{\textbf{x}, \textbf{c} \in \Omega} \operatorname{log} \left(H(\Phi(\textbf{x})) P_f + (1 - H(\Phi(\textbf{x})))P_b\right)
+    &= \sum_{\textbf{x}, \textbf{c} \in \Omega} -\operatorname{log} \left(H(\Phi(\textbf{x})) P_f + (1 - H(\Phi(\textbf{x})))P_b\right)
 \end{aligned}$$
 
 where:
@@ -272,7 +272,7 @@ Finally, we have the objective function for optimization problem:
 
 $$\begin{aligned}
     E(\textbf{p})
-    &= \sum_{\textbf{x}, \textbf{c} \in \Omega} \operatorname{log} (H(\Phi(\textbf{x})) P_f + (1 - H(\Phi(\textbf{x})))P_b) \\
+    &= \sum_{\textbf{x}, \textbf{c} \in \Omega} -\operatorname{log} (H(\Phi(\textbf{x})) P_f + (1 - H(\Phi(\textbf{x})))P_b) \\
     &= \sum_{\textbf{x}, \textbf{c} \in \Omega} F(\textbf{x}, \textbf{c})
 \end{aligned}$$
 
@@ -327,7 +327,7 @@ $$T \leftarrow \operatorname{exp}(\Delta \hat{\xi})T$$
 
 We already have updated equation for $$\Delta \xi$$, what remains is how we construct the Jacobian and pseudo Hessian matrix.
 
-$$F(\textbf{x}, \textbf{c}) = \operatorname{log} (H(\Phi(\textbf{x})) P_f + (1 - H(\Phi(\textbf{x})))P_b)$$
+$$F(\textbf{x}, \textbf{c}) = -\operatorname{log} (H(\Phi(\textbf{x})) P_f + (1 - H(\Phi(\textbf{x})))P_b)$$
 
 This is pretty easy thanks to chain rule:
 
