@@ -9,17 +9,6 @@ meta: "Springfield"
 ---
 
 ## Probabilistic Multiple - View 3D Reconstruction
----
-layout: post
-title: "Probabilistic Multiple - View 3D Reconstruction"
-tagline: "Variational Methods"
-categories: Mathematics
-image: /thumbnail-mobile.png
-author: "Bao-Huy Nguyen"
-meta: "Springfield"
----
-
-## Probabilistic Multiple - View 3D Reconstruction
 
 There are numerous methods for reconstructing a real object into the mesh, such as voxel carving, which independently processes the input images or structure from motion. However, in this blog, we would like to introduce to you another solution for this ill-posed inverse computer vision problem. This method is a volumetric approach, where each voxel is assigned two probability values for being in or out of the 3D object. Let's start.
 
@@ -32,25 +21,25 @@ Before diving into the main sections, we have to go through notations first.
 
 ### Volume
 
-Let **volume $V$** be **our local 3D environment**, which includes the 3D object needed to reconstruct.
+Let **volume $$V$$** be **our local 3D environment**, which includes the 3D object needed to reconstruct.
 
 $$V := [v_{11}, v_{12}] \times [v_{21}, v_{22}] \times [v_{31}, v_{32}] \subset \mathbb{R}^3$$
 
-and each $v_{ij} \in \mathbb{R}$.
+and each $$v_{ij} \in \mathbb{R}$$.
 
 where:
 
-* $[a, b] = \{ x \mid a \le x \le b \}$
+* $$[a, b] = \{ x \mid a \le x \le b \}$$
 
-* $A \times B = \{(a, b) \mid a \in A \, \text{and} \, b \in B \}$ is Cartesian product of two sets.
+* $$A \times B = \{(a, b) \mid a \in A \, \text{and} \, b \in B \}$$ is Cartesian product of two sets.
 
 <u> Example</u>:
 
 ![](/images/3DReconstruction/volume.png)
 
-In $x$ axis, the volume $V$ in the image above goes from $0$ to $8$, from $0$ to $20$ for $y$ axis and from $0$ to $10$ for $z$ axis.
+In $$x$$ axis, the volume $$V$$ in the image above goes from $$0$$ to $$8$$, from $$0$$ to $$20$$ for $$y$$ axis and from $$0$$ to $$10$$ for $$z$$ axis.
 
-Discretely, volume $V$ having a resolution $N_x \times N_y \times N_z$ is a set of voxels:
+Discretely, volume $$V$$ having a resolution $$N_x \times N_y \times N_z$$ is a set of voxels:
 
 $$V :=\left\{\left(\begin{matrix}
     v_{11} + i \cdot \dfrac{v_{12} - v_{11}}{N_x} \\
@@ -74,25 +63,25 @@ and the **known model view projection matrices** corresponding to input RGB imag
 
 $$\pi_1, ..., \pi_n : V \mapsto \Omega$$
 
-where $\Omega \subset \mathbb{R}^2$.
+where $$\Omega \subset \mathbb{R}^2$$.
 
 ### Shape Function
 
-We present the 3D object by a function $u$. The definition of $u$ is:
+We present the 3D object by a function $$u$$. The definition of $$u$$ is:
 
 $$u(\textbf{v}) = \begin{cases}
     1 \qquad \textbf{v} \in \text{3D object} \\
     0 \qquad \text{otherwise}
 \end{cases}$$
 
-where $\textbf{v}$ is a 3D coordinate of a voxel in volume $V$.
+where $$\textbf{v}$$ is a 3D coordinate of a voxel in volume $$V$$.
 
 In summary, the <u>inputs</u> of our 3D reconstruction problem include:
 
-* Sequence of images $\{I_i\}$
-* Sequence of model - view - projection matrices $\{\pi_i\}$ corresponding
+* Sequence of images $$\{I_i\}$$
+* Sequence of model - view - projection matrices $$\{\pi_i\}$$ corresponding
 
-<u>What we need to find is so-called shape function $u(.)$</u>.
+<u>What we need to find is so-called shape function $$u(.)$$</u>.
 
 ## Generative Model
 
@@ -102,19 +91,19 @@ It is extremely challenging if there is no assumption for an inverse problem lik
 
 where:
 
-* $i$: the index of a frame - $i = 1...n$.
-* $R$: is a  random region variable, can be foreground or background - $R \in \{R_f, R_b\}$
-* $\textbf{c}$: color of voxel after being projected to $i^{th}$ image - $\textbf{c} \in \mathbb{R}^3$
-* $\textbf{v}$: voxel coordinate in volume $V$ - $\textbf{v} \in \mathbb{R}^3$
-* $\textbf{u}$: $= u(\textbf{v})$
+* $$i$$: the index of a frame - $$i = 1...n$$.
+* $$R$$: is a  random region variable, can be foreground or background - $$R \in \{R_f, R_b\}$$
+* $$\textbf{c}$$: color of voxel after being projected to $$i^{th}$$ image - $$\textbf{c} \in \mathbb{R}^3$$
+* $$\textbf{v}$$: voxel coordinate in volume $$V$$ - $$\textbf{v} \in \mathbb{R}^3$$
+* $$\textbf{u}$$: $$= u(\textbf{v})$$
 
-This graphical model may be biased to the heuristic of designers, but at some point, it is still valid. The random variable $\textbf{v}$ in $V$ depends on not only the shape of the 3D object (obviously) but also the foreground or background region $R$ that its projection to image planes belongs to. Whereas the variable color $\textbf{c}$ undoubtedly depends on the region $R$.
+This graphical model may be biased to the heuristic of designers, but at some point, it is still valid. The random variable $$\textbf{v}$$ in $$V$$ depends on not only the shape of the 3D object (obviously) but also the foreground or background region $$R$$ that its projection to image planes belongs to. Whereas the variable color $$\textbf{c}$$ undoubtedly depends on the region $$R$$.
 
 ## Maximizing A Posteriori
 
-Our goal is **to find shape function $\textbf{u}$ given $\{ I_i, \pi_i\}$** or in statistical perspective, we need to seek $\textbf{u}$ such that **posteriori** $P(\textbf{u} \mid \textbf{v}, \textbf{c}_{1...n})$ is maximum.
+Our goal is **to find shape function $$\textbf{u}$$ given $$\{ I_i, \pi_i\}$$** or in statistical perspective, we need to seek $$\textbf{u}$$ such that **posteriori** $$P(\textbf{u} \mid \textbf{v}, \textbf{c}_{1...n})$$ is maximum.
 
-To derive formulation for this posterior, first let's start with the **joint distribution for a given voxel** $P(\textbf{u}, \textbf{v}, R_{1...n}, \textbf{c}_{1...n})$:
+To derive formulation for this posterior, first let's start with the **joint distribution for a given voxel** $$P(\textbf{u}, \textbf{v}, R_{1...n}, \textbf{c}_{1...n})$$:
 
 $$P(\textbf{u}, \textbf{v}, R_{1...n}, \textbf{c}_{1...n}) = P(\textbf{v} \mid \textbf{u}, \textbf{v}, R_{1...n}) P(\textbf{c}_{1...n} \mid R_{1...n}) P(R_{1...n}) P(\textbf{u})$$
 
@@ -122,15 +111,15 @@ We divide both sides by $$P(\textbf{c}_{1...n}) = \underset{i \in {\{f, b\}}}{\s
 
 $$P(\textbf{u}, \textbf{v}, R_{1...n} \mid \textbf{c}_{1...n}) = P(\textbf{v} \mid \textbf{u}, \textbf{v}, R_{1...n}) P(R_{1...n} \mid \textbf{c}_{1...n}) P(\textbf{u})$$
 
-Next, we marginalize over $P(R_{1...n})$:
+Next, we marginalize over $$P(R_{1...n})$$:
 
 $$P(\textbf{u}, \textbf{v} \mid \textbf{c}_{1...n}) = \underset{i \in \{ j, b\}}{\sum} P(\textbf{v} \mid \textbf{u}, \textbf{v}, R_{i, 1...n}) P(R_{i, 1...n} \mid \textbf{c}_{1...n}) P(\textbf{u})$$
 
-With **assumption that $P(\textbf{v})$ is constant**, we can omit the random variable $\textbf{v}$ by divide $P(\textbf{u}, \textbf{v} \mid \textbf{c}_{1...n})$ by $P(\textbf{v})$:
+With **assumption that $$P(\textbf{v})$$ is constant**, we can omit the random variable $$\textbf{v}$$ by divide $$P(\textbf{u}, \textbf{v} \mid \textbf{c}_{1...n})$$ by $$P(\textbf{v})$$:
 
 $$P(\textbf{u} \mid \textbf{v}, \textbf{c}_{1...n}) \propto \underset{i \in \{ j, b\}}{\sum} P(\textbf{v} \mid \textbf{u}, \textbf{v}, R_{i, 1...n}) P(R_{i, 1...n} \mid \textbf{c}_{1...n}) P(\textbf{u})$$
 
-**The prior $P(\textbf{u})$ is also eliminated** for the sake of simplicity. Finally, the **posterior** over the volume becomes **likelihood**:
+**The prior $$P(\textbf{u})$$ is also eliminated** for the sake of simplicity. Finally, the **posterior** over the volume becomes **likelihood**:
 
 $$\begin{aligned}
     P(u \mid \Omega_3) &\propto \underset{\textbf{v} \in \Omega_3}{\prod} P(\textbf{u} \mid \textbf{v}, \textbf{c}_{1...n}) \\
@@ -161,14 +150,14 @@ $$\begin{aligned}
     P(\textbf{v} \mid \textbf{u}, R_{b, 1...n}) &= \dfrac{1}{\text{volume}_b}
 \end{aligned}$$
 
-Without loss of generality, with shape function $\textbf{u}$, we can have a general formulation of a voxel likelihood:
+Without loss of generality, with shape function $$\textbf{u}$$, we can have a general formulation of a voxel likelihood:
 
 $$\begin{aligned}
     P(\textbf{v} \mid \textbf{u}, R_{f, 1...n}) &= \dfrac{\textbf{u}}{\zeta_f} \\
     P(\textbf{v} \mid \textbf{u}, R_{b, 1...n}) &= \dfrac{1 - \textbf{u}}{\zeta_b}
 \end{aligned}$$
 
-and $\zeta_f, \zeta_b$ being the average number of voxels (over n views) that project to a foreground pixel (with $P(\textbf{c} \mid R_f) \gt P(\textbf{c} \mid R_b)$ and  $\textbf{c} = I_m(\pi_m(\textbf{v}))$) and a background pixel, respectively.
+and $$\zeta_f, \zeta_b$$ being the average number of voxels (over n views) that project to a foreground pixel (with $$P(\textbf{c} \mid R_f) \gt P(\textbf{c} \mid R_b)$$ and  $$\textbf{c} = I_m(\pi_m(\textbf{v}))$$) and a background pixel, respectively.
 
 Now, one question has come is that how can we compute two probabilities $$P(\textbf{c}_{1...n} \mid \textbf{R}_{i,1...n})$$ with $$i \in \{ f, b\}$$. A straightforward way is to treat $$\{P(\textbf{c}_k \mid R_{i, k})\}$$ independently. Based on visibility, the probability of a voxel in the foreground is equivalent to the probability that all cameras observe this voxel in the foreground, whereas the probability of a voxel being a part of the background is that at least one camera sees it as the background. This way is pretty similar to voxel carving when a voxel is considered as background if its projections on the background.
 
@@ -186,7 +175,7 @@ $$\begin{aligned}
     P(\textbf{c}_{1...n} \mid R_{b, 1...n}) &= 1 - \operatorname{exp} \left( \dfrac{\sum_{k = 1}^n1 - \operatorname{log}( 1 - P(\textbf{c}_k \mid R_{b, k}))}{n} \right)
 \end{aligned}$$
 
-The probability of foreground and background region over $n$ views becomes $P(R_{f, 1...n}) = \dfrac{\bar{\eta_f}}{\eta}$ with $\eta_f$ being the average value of foreground area $\eta_f$ over the $n$ views. $P(R_{b, 1...n})$ follows analogously ($\eta$ is the whole image area).
+The probability of foreground and background region over $$n$$ views becomes $$P(R_{f, 1...n}) = \dfrac{\bar{\eta_f}}{\eta}$$ with $$\eta_f$$ being the average value of foreground area $$\eta_f$$ over the $$n$$ views. $$P(R_{b, 1...n})$$ follows analogously ($$\eta$$ is the whole image area).
 
 So the final posterior equation is:
 
@@ -203,7 +192,7 @@ There are many numerical optimization methods to maximize this posterior (basica
 
 $$E = \sum_{\textbf{v} \in \Omega_3}\{\textbf{u}P_i + (1 - \textbf{u}) P_o + \alpha |\nabla \textbf{u}| \}$$
 
-where $\alpha$ is a tunable parameter.
+where $$\alpha$$ is a tunable parameter.
 
 For fast and global convergence, Victor et al [[1]](#1)  used continuous min-cut / max-flow [[3]](#3):
 
@@ -222,7 +211,7 @@ To know the details of the algorithm, visit [[3]](#3) and [[4]](#4)
 
 ## Results
 
-Some may ask how we can know $\{\pi_k\}$ in the real environment.
+Some may ask how we can know $$\{\pi_k\}$$ in the real environment.
 
 To answer this, we use **ARCore**, which simultaneously localizes the position of the camera in the 3D world. The setting on mobile phones is straightforward.
 
